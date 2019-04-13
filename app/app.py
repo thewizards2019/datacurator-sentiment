@@ -18,7 +18,7 @@ def create_app(config=None, testing=False, cli=True):
         recieves
         """
         try:
-            clean_input = re.sub(pattern, "", sentence)
+            clean_input = re.sub(CLEAN, "", sentence)
             score = analyser.polarity_scores(clean_input)
             return {"sentiment": score["compound"]}
         except:
