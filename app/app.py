@@ -52,17 +52,17 @@ def create_app(config=None, testing=False, cli=True):
         try:
             m = json.loads(msg.value().decode("utf-8"))
             if "content" in m.keys():
-                seniment_value = json.dumps(sentiment_analyzer_scores(m["content"]))
+                sentiment_value = json.dumps(sentiment_analyzer_scores(m["content"]))
                 msg_key = msg.key().decode("utf-8")
-                print("seniment_value", seniment_value)
+                print("sentiment_value", sentiment_value)
                 if msg_key is not None:
                     p.produce(
                         topic="content_curator_twitter",
                         key=msg_key,
-                        value=seniment_value,
+                        value=sentiment_value,
                     )
                     p.flush()
-                    print("ADDED:", {"key": msg_key, "value": seniment_value})
+                    print("ADDED:", {"key": msg_key, "value": sentiment_value})
         except Exception as e:
             print("ERROR:", e)
 
