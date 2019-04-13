@@ -8,6 +8,8 @@ setuptools.setup(
     zip_safe=False,
     install_requires=[
         'Flask',
+        'vaderSentiment',
+        'requests'
     ],
     extras_require={
         'dev': [
@@ -15,7 +17,8 @@ setuptools.setup(
             'flake8',
             'pytest-cov',
             'bandit',
-            'black'
+            'black',
+            'confluent_kafka'
         ]
     },
     entry_points={
