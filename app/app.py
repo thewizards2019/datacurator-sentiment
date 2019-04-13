@@ -57,7 +57,9 @@ def create_app(config=None, testing=False, cli=True):
                 print("seniment_value", seniment_value)
                 if msg_key is not None:
                     p.produce(
-                        topic="content_curator_twitter", key=msg_key, value=seniment_value
+                        topic="content_curator_twitter",
+                        key=msg_key,
+                        value=seniment_value,
                     )
                     p.flush()
                     print("ADDED:", {"key": msg_key, "value": seniment_value})
