@@ -30,7 +30,7 @@ def create_app(config=None, testing=False, cli=True):
     c = Consumer(
         {
             "bootstrap.servers": "localhost:9092",
-            "group.id": "content_curator_twitter_group_12",
+            "group.id": "content_curator_twitter_group_19",
             "auto.offset.reset": "earliest",
         }
     )
@@ -50,18 +50,17 @@ def create_app(config=None, testing=False, cli=True):
 
         # print('Received message: {}'.format(msg.value().decode('utf-8')))
         try:
-            m = json.loads(msg.value().decode("utf-8").replace("'", '"'))
-            seniment_value = str(sentiment_analyzer_scores(m["content"])).encode(
-                "utf-8"
-            )
-            msg_key = msg.key()
-
-            if msg_key is not None:
-                p.produce(
-                    topic="content_curator_twitter", key=msg_key, value=seniment_value
-                )
-                p.flush()
-                print("ADDED:", {"key": msg_key, "value": seniment_value})
+            m = json.loads(msg.value().decode("utf-8"))
+            if "content" in m.keys():
+                seniment_value = json.dumps(sentiment_analyzer_scores(m["content"]))
+                msg_key = msg.key()
+                print("seniment_value", seniment_value)
+                if msg_key is not None:
+                    p.produce(
+                        topic="content_curator_twitter", key=msg_key, value=seniment_value
+                    )
+                    p.flush()
+                    print("ADDED:", {"key": msg_key, "value": seniment_value})
         except Exception as e:
             print("ERROR:", e)
 
