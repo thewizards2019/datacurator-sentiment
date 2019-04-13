@@ -28,7 +28,7 @@ $(pytest): $(VENV)
 
 lint: $(pytest)
 	$(black) $(PKG_NAME)
-	$(flake8) $(PKG_NAME)
+	$(flake8) $(PKG_NAME) --ignore E501,W605,F841
 
 test: $(pytest)
 	$(pytest) -v --cov-branch --cov=tests/unit --cov-report=term
