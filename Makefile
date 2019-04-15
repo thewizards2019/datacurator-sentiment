@@ -38,7 +38,7 @@ scan:
 	$(bandit) -lll -r app/
 
 run:
-	$(PKG_NAME) run
+	$(VENV)/bin/$(PKG_NAME) run
 
 clean:
 	rm -rf $(VENV)
